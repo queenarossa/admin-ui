@@ -10,22 +10,22 @@ function Exercise() {
         </h1>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <UserCard 
-                name="Kholifah" 
-                email="kholifah@gmail.com"
-                street="Jl. Gajah Barat"
-                city="Semarang"
+                name="Rossa" 
+                email="queenarossa@gmail.com"
+                street="Jl. Brigjen katamso"
+                city="Kab. Semarang"
             />
             <UserCard 
-                name="Rana" 
-                email="rana@gmail.com"
-                street="Jl. Merdeka"
-                city="Jakarta"
+                name="Ocik" 
+                email="ocik@gmail.com"
+                street="Jl. Jalan"
+                city="Korea"
             />
             <UserCard 
-                name="Almadina" 
-                email="almadina@gmail.com"
-                street="Jl. Pine Rd"
-                city="Chicago"
+                name="Pinkydino" 
+                email="pinky@gmail.com"
+                street="Jl. Isolate"
+                city="Amerika"
             />
         </div>
       </div>
