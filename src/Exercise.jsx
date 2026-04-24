@@ -21,12 +21,6 @@ function Exercise() {
                 street="Jl. Jalan"
                 city="Korea"
             />
-            <UserCard 
-                name="Pinkydino" 
-                email="pinky@gmail.com"
-                street="Jl. Isolate"
-                city="Amerika"
-            />
         </div>
       </div>
     </>
