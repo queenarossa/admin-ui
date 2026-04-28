@@ -4,7 +4,7 @@ function App() {
   return (
     <main className="min-h-screen bg-special-mainBg flex justify-center items-center">
       {/* container start */}
-      <div className="w-full max-w-sm rounded-lg">
+      <div className="w-full max-w-sm">
         {/* logo start */}
         <div className="flex justify-center font-poppins tracking-wide text-primary text-4xl">
           <span className="font-bold">FINE</span>
@@ -12,11 +12,11 @@ function App() {
           <span className="font-bold">.IO</span>
         </div> 
         {/* logo end */}
-        {/* form start */}
-        <div className="mt-16">
+                {/* form start */}
+        <div className="mb-6">
           <form action="">
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm padding-2 mb-2">
+            <div>
+              <label htmlFor="email" className="block text-sm mb-2">
                 Email address
               </label>
               <input
@@ -46,7 +46,7 @@ function App() {
                 name="status"
                 id="status"
               />
-              <label htmlFor="status" className="text-sm text-gray-01 mb-2 ml-2">
+              <label htmlFor="status" className="text-sm text-gray-01 ml-6">
                 Keep me signed in
               </label>
             </div>
@@ -62,7 +62,7 @@ function App() {
         				{/* teks start */}
         <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
           <div className="border border-gray-05 w-full"></div>
-          <div className="px-2 bg-special-mainBg absolute"> or sign in with</div>
+          <div class="px-2 bg-special-mainBg absolute"> or sign in with</div>
         </div>
         {/* teks end */}
         {/* sign in with google start */}
@@ -124,6 +124,15 @@ function App() {
           <a className="text-primary text-sm font-bold">Create an account</a>
         </div>
         {/* link end */}
+        {/* logo start */}
+        <div></div>
+        {/* logo end */}
+        {/* form start */}
+        <div></div>
+        {/* form end */}
+        {/* teks start */}
+        <div></div>
+        {/* teks end */}
         {/* sign in with google start */}
         <div></div>
         {/* sign in with google end */}
