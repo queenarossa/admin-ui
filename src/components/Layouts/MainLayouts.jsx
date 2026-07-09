@@ -1,10 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Icon from "../Elements/Icon";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
+import { AuthContext } from "../../context/authContext";
+import { logoutService } from "../../services/authService";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { DarkModeContext } from "../../context/darkModeContext";
+import DarkModeToggle from "../Elements/DarkModeToggle";
 
 function MainLayout(props) {
   const { children } = props;
@@ -34,9 +40,29 @@ function MainLayout(props) {
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
 
+  const { user, logout } = useContext(AuthContext);
+  const { darkMode } = useContext(DarkModeContext);
+
+  const [loggingOut, setLoggingOut] = useState(false);
+
+ 	const handleLogout = async () => {
+    try {
+      setLoggingOut(true);
+      await logoutService();
+      logout(); 
+    } catch (err) {
+      console.error(err);
+      if (err.status === 401) {
+        logout();
+      }
+    } finally {
+      setLoggingOut(false);
+    }
+  };
+
   return (
     <>
-      <div className={`flex min-h-screen ${theme.name}`}>
+      <div className={`flex min-h-screen ${theme.name} ${darkMode ? "dark" : ""}`}>
         <aside className="bg-defaultBlack w-28 sm:w-64 text-special-bg2 flex flex-col justify-between px-7 py-12">
           <div>
             <div className="mb-10">
@@ -74,21 +100,20 @@ function MainLayout(props) {
                 ))}
               </div>
             </div>
-            <NavLink to="/login">
+            <div onClick={handleLogout} className="cursor-pointer">
               <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
                 <div className="mx-auto sm:mx-0 text-primary">
                   <Icon.Logout />
                 </div>
                 <div className="ms-3 hidden sm:block">Logout</div>
               </div>
-            </NavLink>
+            </div>
             <div className="border my-10 border-b-special-bg"></div>
             <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                Username
-                <br />
-                View Profile
+                <div>{user.name}</div>
+                <div>View Profile</div>
               </div>
               <div className="hidden sm:block">
                 <Icon.Detail size={15} />
@@ -96,10 +121,10 @@ function MainLayout(props) {
             </div>
           </div>
         </aside>
-        <div className="bg-special-mainBg flex-1 flex flex-col">
-          <div className="border border-b border-gray-05 px-6 py-4 flex justify-between items-center">
+        <div className="bg-special-mainBg dark:bg-[#242424] flex-1 flex flex-col">
+          <div className="border border-b border-gray-05 dark:border-special-bg3 px-6 py-4 flex justify-between items-center">
             <div className="flex items-center">
-              <div className="font-bold text-2xl me-6">Username</div>
+              <div className="font-bold text-2xl me-6 dark:text-white">{user.name}</div>
               <div className="text-gray-03 flex">
                 <Icon.ChevronRight size={20} />
                 <span>May 19, 2023</span>
@@ -112,9 +137,25 @@ function MainLayout(props) {
               <Input backgroundColor="bg-white" border="border-white" />
             </div>
           </div>
+
+          {/* toggle dark/light mode - diletakkan di bawah navbar */}
+          <div className="px-6 pt-3">
+            <DarkModeToggle />
+          </div>
+
           <div className="flex-1 px-6 py-4">{children}</div>
         </div>
       </div>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loggingOut}
+      >
+        <div className="flex flex-col items-center">
+          <CircularProgress color="inherit" />
+          <span className="mt-2">Logging Out</span>
+        </div>
+      </Backdrop>
     </>
   );
 }

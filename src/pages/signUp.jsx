@@ -1,49 +1,49 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import AuthLayout from "../components/Layouts/AuthLayout";
-import FormSignIn from "../components/Fragments/FormSignIn";
-import { loginService } from "../services/authService";
-import { AuthContext } from "../context/authContext";
+import FormSignUp from "../components/Fragments/FormSignUp";
+import { registerService } from "../services/authService";
 import AppSnackbar from "../components/Elements/AppSnackbar";
-import DarkModeToggle from "../components/Elements/DarkModeToggle";
 
-function SignIn() {
-  const { login } = useContext(AuthContext);
-
+const SignUpPage = () => {
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
-  }); 
-  
+  });
+
   const handleCloseSnackbar = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
-  const handleLogin = async (email, password) => {
+  const handleRegister = async (name, email, password) => {
     try {
-      const { refreshToken } = await loginService(email, password);
-      login(refreshToken);
+      await registerService(name, email, password);
+      setSnackbar({
+        open: true,
+        message: "Register Berhasil",
+        severity: "success",
+      });
     } catch (err) {
-      setSnackbar({ open: true, message: err.msg, severity: "error" });
+      setSnackbar({
+        open: true,
+        message: err.msg || "Email sudah pernah digunakan sebelumnya",
+        severity: "error",
+      });
     }
   };
 
   return (
-    <AuthLayout>
-      <FormSignIn onSubmit={handleLogin} />
+    <AuthLayout title="Create an account" type="signup">
+      <FormSignUp onSubmit={handleRegister} />
 
-      <div className="mt-6 flex justify-center">
-        <DarkModeToggle />
-      </div>
-
-        <AppSnackbar
-          open={snackbar.open}
-          message={snackbar.message}
-          severity={snackbar.severity}
-          onClose={handleCloseSnackbar}
-        />
+      <AppSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={handleCloseSnackbar}
+      />
     </AuthLayout>
   );
-}
+};
 
-export default SignIn;
+export default SignUpPage;
