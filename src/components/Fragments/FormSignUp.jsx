@@ -44,7 +44,7 @@ function FormSignUp({ onSubmit }) {
                       id="name"
                       type="text"
                       label="Name"
-                      placeholder="Kholifah Rana Almadina"
+                      placeholder="Rossa Queena Innaka Prasetiya"
                     />
                   )}
                 </Field>
